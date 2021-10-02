@@ -17,7 +17,7 @@ mod ptr_extern;
 /// [docs.opencv.org 3.x](https://docs.opencv.org/3.4/d0/de7/structcv_1_1Ptr.html)
 /// [docs.opencv.org 4.x](https://en.cppreference.com/w/cpp/memory/shared_ptr)
 pub struct Ptr<T: ?Sized> where Self: PtrExtern {
-	ptr: *mut c_void,
+	ptr: *const c_void,
 	_d: PhantomData<T>,
 }
 
@@ -46,7 +46,7 @@ impl<T: ?Sized> Boxed for Ptr<T> where Self: PtrExtern {
 
 	#[inline]
 	fn into_raw(self) -> *mut c_void {
-		ManuallyDrop::new(self).ptr
+		ManuallyDrop::new(self).ptr as *mut c_void
 	}
 
 	#[inline]
@@ -56,7 +56,7 @@ impl<T: ?Sized> Boxed for Ptr<T> where Self: PtrExtern {
 
 	#[inline]
 	fn as_raw_mut(&mut self) -> *mut c_void {
-		self.ptr
+		self.ptr as *mut c_void
 	}
 }
 
