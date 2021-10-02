@@ -6,6 +6,7 @@ pub mod dnn;
 pub mod features2d;
 pub mod sys;
 pub mod types;
+pub mod video;
 
 pub mod prelude {
 	#[cfg(ocvrs_has_module_core)]
