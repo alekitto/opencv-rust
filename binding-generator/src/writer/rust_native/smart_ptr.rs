@@ -47,6 +47,12 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			"inner_rust_full" => pointee_type.rust_full(),
 		};
 
+		if let Some(cls) = pointee_type.as_class() {
+			if cls.is_abstract() {
+				inter_vars.insert("inner_rust_full", format!("{} + '_", pointee_type.rust_full()).into());
+			}
+		}
+
 		let mut impls = String::new();
 		let mut gen_ctor = pointee_type.is_primitive();
 		if let Some(cls) = pointee_type.as_class() {
